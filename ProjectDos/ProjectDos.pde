@@ -44,7 +44,7 @@ void draw() {
       walker.eat(f);
       foods.remove(f);
     }
-    if ((walker.location.x > 225) && (walker.location.x < 450) || (walker.location.x > 675) && (walker.location.x < 900)) {
+    if ((walker.location.x > 0) && (walker.location.x < 90) || (walker.location.x > 490) && (walker.location.x < 690)) {
       //data.remove(f);
       if (walker.isTouching(f)) {
       walker.putBack(f);
