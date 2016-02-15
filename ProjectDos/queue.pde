@@ -46,7 +46,11 @@ class Queue {
 
   void eat(Food f) {
     //FIFO
-    data.add(f);
+    int[] q =  new int[100];
+    for(int i=0; i<100; i++){
+      q[100-i] = f.c;
+      data.add(f);
+    }
     f.location.x = random(400, 600);
     f.location.y = random(height - 200, height);
   }

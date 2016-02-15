@@ -46,7 +46,11 @@ class Stack {
 
   void eat(Food f) {
     //stack adds elements one on top of the other, LIFO
-    data.add(f);
+    int[] q =  new int[100];
+    for(int i=0; i<100; i++){
+      q[100-i] = f.c;
+      data.add(f);
+    }
     f.location.x = random(600, 800);
     f.location.y = random(height - 200, height);
   }
