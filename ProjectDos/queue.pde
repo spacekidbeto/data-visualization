@@ -1,4 +1,4 @@
-class Walker {
+class Queue {
   final int MAX_VELOCITY = 1;
   final float NOISE_DELTA = 0.01;
   final int WIDTH = 70;
@@ -10,7 +10,7 @@ class Walker {
 
   ArrayList<Food> data = new ArrayList<Food>();
 
-  public Walker(PVector initialLocation) {
+  public Queue(PVector initialLocation) {
     this.location = initialLocation;
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
@@ -45,8 +45,9 @@ class Walker {
   }
 
   void eat(Food f) {
+    //FIFO
     data.add(f);
-    f.location.x = random(0, 200);
+    f.location.x = random(400, 600);
     f.location.y = random(height - 200, height);
   }
   

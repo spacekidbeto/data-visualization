@@ -1,5 +1,4 @@
 class Food {
-
   PVector location;
   int diameter;
   color c;
@@ -15,5 +14,4 @@ class Food {
     ellipse(location.x, location.y,
       diameter, diameter);
   }
-
 }
