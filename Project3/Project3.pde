@@ -1,9 +1,11 @@
 int temperature = 0;
 int low = 0;
 int currTemp = 0;
+String city = "";
 String weather = "";
 String input = "";
 String zip = "75234";
+String date = "";
 PImage bg;
 PImage img;
 String searchTwitterForThis = "";
@@ -41,8 +43,12 @@ void getInfo(){
   // Grab the element we want
   XML forecast = xml.getChild("channel/item/yweather:forecast");
   XML currForecast = xml.getChild("channel/item/yweather:condition");
+  XML fecha = xml.getChild("channel/item/yweather:forecast");
+  XML location = xml.getChild("channel/yweather:location");
   
   // Get the attributes we want
+  city = location.getString("city");
+  date = fecha.getString("date");
   temperature = forecast.getInt("high");
   low = forecast.getInt("low");  
   weather = forecast.getString("text");
@@ -126,12 +132,14 @@ void keyPressed() {
 void displayData(){
   textAlign(LEFT);
   fill(0);
-  text("Input: " + input,10,10);
-  text("Zip: " + zip,10,30);
+  text("Enter Zip Of Destination: " + input,10,10);
+  text("City: " + city,10,30);
   text("Current Temperature: " + currTemp, 10, 50);
   text("Today’s high: " + temperature, 10, 70);
   text("Today’s low: " + low, 10, 90);
   text("Forecast: " + weather, 10, 110);
+  text(date, 10, 130);
+  
 }
 
 void drawSun(){
@@ -153,7 +161,6 @@ void drawRain(){
   for (int i = 0; i < drops.length; i++) {
     drops[i].fall();
   }  
-
 }
 
 void drawClouds(){
