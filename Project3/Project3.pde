@@ -27,6 +27,11 @@ Snow[] flakes = new Snow[numSnow]; // Declare and create the array
 
 
 void getInfo(){
+  
+  //mars data
+  String m = "http://marsweather.ingenology.com/v1/latest/";
+  
+  
   // The URL for the XML document
   String url = "http://xml.weather.yahoo.com/forecastrss?p=" + zip;
   
@@ -43,6 +48,7 @@ void getInfo(){
   weather = forecast.getString("text");
   currTemp = currForecast.getInt("temp");
 }
+
 void setup() {
   size(500, 500); 
   
@@ -50,10 +56,6 @@ void setup() {
   String h = "http:";
   img = loadImage( h + "//www.clker.com/cliparts/x/s/r/n/A/5/sun-yellow-md.png");
   imageMode(CENTER);
-  
-  //cloud
-  smooth();
-  frameRate(40);
   
   //rain
   //Loop through array to create each object
@@ -72,66 +74,39 @@ void setup() {
 
 void draw() {
   background(255);
-  int indent = 10;
   fill(0);
   getInfo();
+  //Display everything
+  displayData();
   
   //sunny clear
   counter++;
   if ( (weather.contains("Sunny")) || (weather.contains("Clear")) )
   {
-    background(204, 230, 255);
-    translate(width/2, height/2);
-    rotate(counter*TWO_PI/360);
-    image(img, 0, 0);
+    drawSun();
   }
   
   //clouds
   if ( (weather.contains("Cloudy")) || (weather.contains("Partly Cloudy")) )
   {
-    background(230, 230, 255);
-    cloudA.update();
-    cloudB.update();
-    cloudC.update();
-    cloudD.update();
+    drawClouds();
   }
   
   //rain
   if ( (weather.contains("Rain")) || (weather.contains("AM Showers")) || (weather.contains("PM Showers")) )
   {
-    background(224, 224, 235);    
-    //Loop through array to use objects.
-    for (int i = 0; i < drops.length; i++) {
-      drops[i].fall();
-    }
-    //Loop through array to use objects.
-    for (int i = 0; i < drops.length; i++) {
-      drops[i].fall();
-    }
+    drawRain();
   }
   
   //snow
   if ( (weather.contains("Snow")) )
   {
-    background(242, 242, 242);
-    //Loop through array to use objects.
-    for (int i = 0; i < flakes.length; i++) {
-      flakes[i].fall();
-    }
-    //Loop through array to use objects.
-    for (int i = 0; i < flakes.length; i++) {
-      flakes[i].fall();
-    }
+    drawSnow();
   }
   
-  fill(0);
-  // Display everything
-  text("Input: " + input,indent,10);
-  text("Zip: " + zip,indent,30);
-  text("Current Temperature: " + currTemp, 10, 50);
-  text("Today’s high: " + temperature, 10, 70);
-  text("Today’s low: " + low, 10, 90);
-  text("Forecast: " + weather, 10, 110);
+  //Display everything
+  displayData();
+  
 } 
 
 //read input
@@ -145,5 +120,58 @@ void keyPressed() {
     // Otherwise, concatenate the String
     // Each character typed by the user is added to the end of the String variable.
     input = input + key; 
+  }
+}
+
+void displayData(){
+  textAlign(LEFT);
+  fill(0);
+  text("Input: " + input,10,10);
+  text("Zip: " + zip,10,30);
+  text("Current Temperature: " + currTemp, 10, 50);
+  text("Today’s high: " + temperature, 10, 70);
+  text("Today’s low: " + low, 10, 90);
+  text("Forecast: " + weather, 10, 110);
+}
+
+void drawSun(){
+  background(204, 230, 255);
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(counter*TWO_PI/360);
+  image(img, 0, 0);
+  popMatrix();
+}
+
+void drawRain(){
+  background(224, 224, 235);    
+  //Loop through array to use objects.
+  for (int i = 0; i < drops.length; i++) {
+    drops[i].fall();
+  }
+  //Loop through array to use objects.
+  for (int i = 0; i < drops.length; i++) {
+    drops[i].fall();
+  }  
+
+}
+
+void drawClouds(){
+  background(230, 230, 255);
+  cloudA.update();
+  cloudB.update();
+  cloudC.update();
+  cloudD.update();
+}
+
+void drawSnow(){
+  background(242, 242, 242);
+  //Loop through array to use objects.
+  for (int i = 0; i < flakes.length; i++) {
+    flakes[i].fall();
+  }
+  //Loop through array to use objects.
+  for (int i = 0; i < flakes.length; i++) {
+    flakes[i].fall();
   }
 }

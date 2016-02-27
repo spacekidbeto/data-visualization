@@ -8,20 +8,26 @@ class Cloud {
     r=r_;
     xSpeed= xSpeed_;
   }
+  
+  void cloudSetup(){
+    smooth();
+    frameRate(40);
+  }
    
   void update(){
    display();
-  drift();
+    move();
+    cloudSetup();
   }
  
   void display() {
     noStroke();
     fill(200,200,200,240);
-    ellipse(x, y, r, r); 
+    ellipse(x, y, r, r);
     ellipse(x-(r/2), y, r*.8, r*.8);
   }
    
-void drift(){
+void move(){
    x+=xSpeed;
    if (x>width || x < 0) xSpeed=xSpeed*-1;
   }  
