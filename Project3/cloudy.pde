@@ -11,7 +11,7 @@ class Cloud {
   
   void cloudSetup(){
     smooth();
-    frameRate(40);
+    frameRate(50);
   }
    
   void update(){

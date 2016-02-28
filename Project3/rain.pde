@@ -1,5 +1,5 @@
 class Rain {
-  float r = random(600);
+  float r = random(500);
   float y = random(-height);
 
   void fall() {
@@ -11,6 +11,5 @@ class Rain {
    r = random(600);
    y = random(-200);
    }
-
   }
 }

@@ -2,6 +2,7 @@ int temperature = 0;
 int low = 0;
 int currTemp = 0;
 String city = "";
+String region = "";
 String weather = "";
 String input = "";
 String zip = "75234";
@@ -10,6 +11,7 @@ PImage bg;
 PImage img;
 String searchTwitterForThis = "";
 int counter;
+int timer;
 
 //rain
 Rain r1;
@@ -27,6 +29,8 @@ Snow s1;
 int numSnow = 50;
 Snow[] flakes = new Snow[numSnow]; // Declare and create the array
 
+//thunder
+Thunder t1;
 
 void getInfo(){
   
@@ -48,6 +52,7 @@ void getInfo(){
   
   // Get the attributes we want
   city = location.getString("city");
+  region = location.getString("region");
   date = fecha.getString("date");
   temperature = forecast.getInt("high");
   low = forecast.getInt("low");  
@@ -57,7 +62,8 @@ void getInfo(){
 
 void setup() {
   size(500, 500); 
-  
+  smooth();
+  frameRate(50);
   //sunny
   String h = "http:";
   img = loadImage( h + "//www.clker.com/cliparts/x/s/r/n/A/5/sun-yellow-md.png");
@@ -89,25 +95,38 @@ void draw() {
   counter++;
   if ( (weather.contains("Sunny")) || (weather.contains("Clear")) )
   {
+    background(204, 230, 255);
     drawSun();
   }
   
   //clouds
   if ( (weather.contains("Cloudy")) || (weather.contains("Partly Cloudy")) )
   {
+    background(230, 230, 255);
     drawClouds();
   }
   
   //rain
   if ( (weather.contains("Rain")) || (weather.contains("AM Showers")) || (weather.contains("PM Showers")) )
   {
+    background(224, 224, 235);
     drawRain();
   }
   
   //snow
   if ( (weather.contains("Snow")) )
   {
+    background(242, 242, 242);
     drawSnow();
+  }
+  
+  //thunder storm
+  if ( (weather.contains("Storm")) )
+  {
+    background(224, 224, 235);
+    drawRain();
+    drawClouds();
+    drawThunder();
   }
   
   //Display everything
@@ -133,7 +152,7 @@ void displayData(){
   textAlign(LEFT);
   fill(0);
   text("Enter Zip Of Destination: " + input,10,10);
-  text("City: " + city,10,30);
+  text("City: " + city + ", " + region,10,30);
   text("Current Temperature: " + currTemp, 10, 50);
   text("Today’s high: " + temperature, 10, 70);
   text("Today’s low: " + low, 10, 90);
@@ -143,7 +162,6 @@ void displayData(){
 }
 
 void drawSun(){
-  background(204, 230, 255);
   pushMatrix();
   translate(width/2, height/2);
   rotate(counter*TWO_PI/360);
@@ -151,8 +169,7 @@ void drawSun(){
   popMatrix();
 }
 
-void drawRain(){
-  background(224, 224, 235);    
+void drawRain(){  
   //Loop through array to use objects.
   for (int i = 0; i < drops.length; i++) {
     drops[i].fall();
@@ -164,7 +181,6 @@ void drawRain(){
 }
 
 void drawClouds(){
-  background(230, 230, 255);
   cloudA.update();
   cloudB.update();
   cloudC.update();
@@ -172,7 +188,6 @@ void drawClouds(){
 }
 
 void drawSnow(){
-  background(242, 242, 242);
   //Loop through array to use objects.
   for (int i = 0; i < flakes.length; i++) {
     flakes[i].fall();
@@ -180,5 +195,19 @@ void drawSnow(){
   //Loop through array to use objects.
   for (int i = 0; i < flakes.length; i++) {
     flakes[i].fall();
+  }
+}
+
+void drawThunder(){
+  fill(0,25);
+  rect(0,0,600,600); 
+  t1 = new Thunder();
+  //bolt every 2 seconds
+  if (millis() - timer >= 2000) {
+    timer = millis();
+    t1.lightning();
+    t1.lightning();
+    t1.lightning();
+    loop();
   }
 }
