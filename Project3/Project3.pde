@@ -9,9 +9,9 @@ String zip = "75234";
 String date = "";
 PImage bg;
 PImage img;
-String searchTwitterForThis = "";
 int counter;
 int timer;
+int state = 0;
 
 //rain
 Rain r1;
@@ -32,12 +32,7 @@ Snow[] flakes = new Snow[numSnow]; // Declare and create the array
 //thunder
 Thunder t1;
 
-void getInfo(){
-  
-  //mars data
-  String m = "http://marsweather.ingenology.com/v1/latest/";
-  
-  
+void getInfo(){  
   // The URL for the XML document
   String url = "http://xml.weather.yahoo.com/forecastrss?p=" + zip;
   
@@ -87,52 +82,63 @@ void setup() {
 void draw() {
   background(255);
   fill(0);
-  getInfo();
-  //Display everything
-  displayData();
   
-  //sunny clear
-  counter++;
-  if ( (weather.contains("Sunny")) || (weather.contains("Clear")) )
-  {
-    background(204, 230, 255);
-    drawSun();
-  }
+  if (state == 0) {
+    drawWeatherAnalysis();
+  } 
+  else {
+    getInfo();
+    //Display everything
+    displayData();
   
-  //clouds
-  if ( (weather.contains("Cloudy")) || (weather.contains("Partly Cloudy")) )
-  {
-    background(230, 230, 255);
-    drawClouds();
-  }
+    //sunny clear
+    counter++;
+    if ( (weather.contains("Sunny")) || (weather.contains("Fair")) || (weather.contains("Clear")) )
+    {
+      background(204, 230, 255);
+      drawSun();
+    }
   
-  //rain
-  if ( (weather.contains("Rain")) || (weather.contains("AM Showers")) || (weather.contains("PM Showers")) )
-  {
-    background(224, 224, 235);
-    drawRain();
-  }
+    //clouds
+    if ( (weather.contains("Cloudy")) || (weather.contains("Partly Cloudy")) )
+    {
+      background(230, 230, 255);
+      drawClouds();
+    }
   
-  //snow
-  if ( (weather.contains("Snow")) )
-  {
-    background(242, 242, 242);
-    drawSnow();
-  }
+    //rain
+    if ( (weather.contains("Rain")) || (weather.contains("AM Showers")) || (weather.contains("PM Showers")) )
+    {
+      background(224, 224, 235);
+      drawRain();
+    }
   
-  //thunder storm
-  if ( (weather.contains("Storm")) )
-  {
-    background(224, 224, 235);
-    drawRain();
-    drawClouds();
-    drawThunder();
-  }
+    //snow
+    if ( (weather.contains("Snow")) )
+    {
+      background(242, 242, 242);
+      drawSnow();
+    }
   
-  //Display everything
-  displayData();
+    //thunder storm
+    if ( (weather.contains("Thunderstorms")) )
+    {
+      background(224, 224, 235);
+      drawRain();
+      drawClouds();
+      drawThunder();
+    }
   
+    //Display everything
+    displayData();
+  
+    }
 } 
+
+//toggle between graph and animations
+void mousePressed() {
+  state = (state + 1) % 2;
+}
 
 //read input
 void keyPressed() {
@@ -210,4 +216,7 @@ void drawThunder(){
     t1.lightning();
     loop();
   }
+}
+
+void drawWeatherAnalysis(){
 }
