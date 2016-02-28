@@ -1,4 +1,4 @@
-int temperature = 0;
+int high = 0;
 int low = 0;
 int currTemp = 0;
 String city = "";
@@ -49,7 +49,7 @@ void getInfo(){
   city = location.getString("city");
   region = location.getString("region");
   date = fecha.getString("date");
-  temperature = forecast.getInt("high");
+  high = forecast.getInt("high");
   low = forecast.getInt("low");  
   weather = forecast.getString("text");
   currTemp = currForecast.getInt("temp");
@@ -82,12 +82,28 @@ void setup() {
 void draw() {
   background(255);
   fill(0);
+  getInfo();
   
   if (state == 0) {
+    
     drawWeatherAnalysis();
+    
+    //current temperature
+    fill(200,150,200);
+    line(40, 480-(currTemp*4), 500, 480-(currTemp*4));
+    
+    //low point
+    fill(31,19,242);
+    text(low + "°F", 80, 480-(low*4));
+    ellipse(90, 480-(low*4), 10, 10);
+  
+    //high point
+    fill(242,19,31);
+    text(high + "°F", 440, 480-(high*4));
+    ellipse(450, 480-(high*4), 10, 10);
   } 
-  else {
-    getInfo();
+  else 
+  {
     //Display everything
     displayData();
   
@@ -160,7 +176,7 @@ void displayData(){
   text("Enter Zip Of Destination: " + input,10,10);
   text("City: " + city + ", " + region,10,30);
   text("Current Temperature: " + currTemp, 10, 50);
-  text("Today’s high: " + temperature, 10, 70);
+  text("Today’s high: " + high, 10, 70);
   text("Today’s low: " + low, 10, 90);
   text("Forecast: " + weather, 10, 110);
   text(date, 10, 130);
@@ -219,4 +235,22 @@ void drawThunder(){
 }
 
 void drawWeatherAnalysis(){
+  stroke(205,201,201);
+  strokeWeight(1);
+  for(int y = 480; y > 0; y -= 20) { //draw line every 20 pixls;
+    line(40,y,500,y);
+  }
+  stroke(139,137,137);
+  strokeWeight(2);
+  line(40,480,40,15);
+  line(40,480,500,480);
+   
+  //draw y axis 
+  fill(0);
+  textAlign(RIGHT);
+  int start = 0;
+  for(int i = 0; i < 12; i++) {
+    text(start + "°F", 33, 480 - i * 40);
+    start = start + 10;
+  }
 }
