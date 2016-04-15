@@ -1,0 +1,35 @@
+data mining
+
+is not:
+- querying data
+- just statistical analysis
+- not just big data
+- 
+
+Components:
+Databases -> grown very big  -> moving data effect, manage data
+Artificial Intelligence / Machine Learning
+Statistics: how to automate it -> fast(tricky algorithms)
+
+Books: 
+collective intelligence (Segaran)
+introduction to data mining (tan, steinbach, kumar)
+
+Math:
+- Statistics
+- Linear Algebra
+- Probability(eg. bayesian etc)
+
+4 families
+- cluster analysis (groups)
+	-> K-means clustering
+	-> hierarchial agglomerative clustering ()
+- classification (categorization, predictive)
+---> dsecision tree
+---> bayesian(probability based), ANN
+- anomaly detection 
+---> similarity metrics
+- association analysis
+---> market basket data/ "a priori" algorithm
+
+vocab: sparse data set -> most of the valiues are 0 

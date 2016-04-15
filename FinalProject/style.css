@@ -1,0 +1,17 @@
+@font-face {
+    font-family: sci;
+    src: url(http://ff.static.1001fonts.net/s/p/space-age.spaceage.otf);
+}
+body{
+	background-color: black;
+}
+#title{
+	font-family: sci;
+	color: #00FF00;
+	font-size: 30px;
+	text-align: center;
+}
+
+#boom{
+	text-align: center;
+}

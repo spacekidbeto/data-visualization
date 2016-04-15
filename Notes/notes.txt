@@ -1,0 +1,13 @@
+normalization normal forms
+good db design
+1. entities becomes tables
+2. attributes becomes columns/fields in table
+	- compound attributes - columns
+3. 1:1 relationships: 
+	become columns in the other entity
+	become foreign key on 
+4. 1:M Relationship:
+	become foreign key on the .... side
+5. M:N relationships:
+	- create a table
+		-- fk's to each entity 
