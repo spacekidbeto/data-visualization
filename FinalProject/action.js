@@ -1,50 +1,35 @@
-// sample test
-var r, g, b;
+ $(function() {
 
-function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
-  // Pick colors randomly
-  r = random(255);
-  g = random(255);
-  b = random(255);
-}
 
-function draw() {
-  // Draw a circle
-  fill(r, g, b, 127);
-  ellipse(window.innerWidth/2, window.innerHeight/2, 200, 200);
-}
+   var ufo = [];
 
-// When the user clicks the mouse
-function mousePressed() {
-  // Check if mouse is inside the circle
-  var d = dist(mouseX, mouseY, window.innerWidth/2, window.innerHeight/2);
-  if (d < 100) {
-    // Pick new random color values
-    r = random(255);
-    g = random(255);
-    b = random(255);
-  }
-}
+   $.getJSON('ufo.json', function(data) {
+       $.each(data.ufo, function(i, f) {
+          var tblRow = "<tr>" + "<td>" + f.sighted_at + "</td>" +
+           "<td>" + f.location + "</td>" + "<td>" + f.shape + "</td>" + "<td>" + f.description + "</td>" + "</tr>"
+           $(tblRow).appendTo("#userdata tbody");
+     });
 
-/*/GET OUR DATA//
-var xmlhttp = new XMLHttpRequest();
-//var url = "ufo.api";
+   });
 
-xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var myArr = JSON.parse(xmlhttp.responseText);
-        myFunction(myArr);
-    }
-};
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
+});
 
-function myFunction(arr) {
-    var out = "";
-    var i;
-    for(i = 0; i < arr.length; i++) {
-        out += '<a href="' + arr[i].url + '">' + 
-        arr[i].display + '</a><br>';
-    }
-}*/
+
+ /*
+  $("#searchterm").keyup(function(e){
+        var q = $("#searchterm").val();
+        $.getJSON("http://en.wikipedia.org/w/api.php?callback=?",
+        {
+          srsearch: q,
+          action: "query",
+          list: "search",
+          format: "json"
+        },
+        function(data) {
+          $("#results").empty();
+          $("#results").append("<p>Results for <b>" + q + "</b></p>");
+          $.each(data.query.search, function(i,item){
+            $("#results").append("<div><a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(item.title) + "'>" + item.title + "</a><br>" + item.snippet + "<br><br></div>");
+          });
+        });
+      });*/

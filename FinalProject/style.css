@@ -8,10 +8,26 @@ body{
 #title{
 	font-family: sci;
 	color: #00FF00;
-	font-size: 30px;
+	font-size: 70px;
 	text-align: center;
 }
 
-#boom{
+p{
 	text-align: center;
+	color: #00FF00;
+	font-size: 35px;
+}
+
+table{
+	text-align: center;
+	color: #00FF00;
+	font-size: 35px;
+}
+
+#search-output{
+	color: #00FF00;
+}
+
+#results{
+	color: white;
 }
