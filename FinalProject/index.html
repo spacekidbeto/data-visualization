@@ -8,27 +8,29 @@
   	<meta name="description" content="See UFO cases in your area!" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="p5.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script id="boom" src="action.js"></script>
 </head>
 <body>
 	<h1 id="title">Aliens?</h1>
   	<p>Enter Your Location:<br>
-    <input id="searchterm" />
-    <button id="search">search</button>
-    <div id="results"></div>
-    <div class="wrapper">
-	<div class="profile">
-   	<table id= "userdata" border="2">
+      <input type="text" id="search-json-input" />
+      <input type="button" id="search-json-submit" value="search" />
+      <results id="header_results">
+      <ol id="search-output">
+      </ol>
+   	
+    <!--table id= "userdata" border="2">
   	<thead>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Shape</th>
-            <th>Description</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Shape</th>
+      <th>Description</th>
     </thead>
-    <tbody>
-    </tbody>
-   	</table>
+      <tbody>
+      </tbody>
+   	</table!-->
+
 	</div>
 	</div>
   	</p>
