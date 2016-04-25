@@ -30,7 +30,7 @@ function drawVader(z){
     else{
         alert("there is " + z + " invader");
     }
-    
+
     for(i=0; i<z; i++){
     // display image (img, x, y)
     image(img, i*35, 0); 
@@ -1045,6 +1045,7 @@ jQuery('#search-json-submit').click(function() {
     jQuery('#search-output').html('');
     var search_query = jQuery('#search-json-input').val();
     var search_query_regex = new RegExp(".*"+search_query+".*", "g");
+    jQuery('#search-output').append('<p>'+'Search Results'+'</p>');
     jQuery.each(a, function(k, v) {
         if(v['location'].match(search_query_regex) ||
            v['description'].match(search_query_regex)) {
@@ -1053,6 +1054,7 @@ jQuery('#search-json-submit').click(function() {
         }
     });
     drawVader(z);
+    jQuery('#search-output').append('<button>'+'<a id="save_world" href="game.html">'+'Save The World'+'</a>'+'</button>');
 });
 
 });
