@@ -13,14 +13,14 @@ $(function() {
 
 
 //search
-var z = 0;
-
+var z = 0
 var img;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   img = loadImage("i.png");  // Load the image
 }
+
 
 function drawVader(z){
     clear();
@@ -31,10 +31,21 @@ function drawVader(z){
         alert("there is " + z + " invader");
     }
 
-    for(i=0; i<z; i++){
-    // display image (img, x, y)
-    image(img, i*35, 0); 
+    if(z>0 && z<35){
+        for(i=0; i<z; i++){
+            // display image (img, x, y)
+            image(img, i*35, 0);
+        }
     }
+    else{
+        // display image (img, x, y)
+        image(img, 0, 0);
+        textSize(35);
+        fill(0, 255, 0);
+        text("x "+z, 1, 60);   
+    }
+
+    jQuery('#boton').append('<button id="game_button">'+'<a id="save_world" href="game.html">'+'Save The World'+'</a>'+'</button>');
 }
 
 $(function(){
@@ -1045,7 +1056,7 @@ jQuery('#search-json-submit').click(function() {
     jQuery('#search-output').html('');
     var search_query = jQuery('#search-json-input').val();
     var search_query_regex = new RegExp(".*"+search_query+".*", "g");
-    jQuery('#search-output').append('<p>'+'Search Results'+'</p>');
+    jQuery('#search-output').append('<p id="title">'+'Aliens In '+ search_query +'</p>');
     jQuery.each(a, function(k, v) {
         if(v['location'].match(search_query_regex) ||
            v['description'].match(search_query_regex)) {
@@ -1054,7 +1065,8 @@ jQuery('#search-json-submit').click(function() {
         }
     });
     drawVader(z);
-    jQuery('#search-output').append('<button>'+'<a id="save_world" href="game.html">'+'Save The World'+'</a>'+'</button>');
 });
 
 });
+
+

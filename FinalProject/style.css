@@ -2,9 +2,41 @@
     font-family: sci;
     src: url(http://ff.static.1001fonts.net/s/p/space-age.spaceage.otf);
 }
+
+html{
+	position: relative;
+    min-height: 100%;
+}
 body{
 	background-color: black;
+	margin: 0 0 100px;
 }
+
+#search-json-input {
+	color: #00FF00;
+	background-color: black;
+	font-size: 18px;
+	border-color: #00FF00;
+}
+
+#search-json-submit {
+	color: #00FF00;
+	background-color: black;
+	font-size: 18px;
+	border-color: #00FF00;
+	margin-left: -8px;
+
+	position:relative;
+    padding:1px 15px;
+    left:-8px;
+    border:2px solid #00FF00;
+}
+
+#search-json-submit:hover {
+	color: black;
+	background-color: #00FF00;
+}
+
 #title{
 	font-family: sci;
 	color: #00FF00;
@@ -30,4 +62,43 @@ table{
 
 #results{
 	color: white;
+}
+
+#game_button{
+	display: block;
+    margin: 0 auto;
+    text-align: center;
+	text-align: center;
+	color: #00FF00;
+	background-color: black;
+	border-color: #00FF00;
+	border:2px solid #00FF00;
+	font-size: 35px;
+}
+
+#game_button:hover{
+	color: black;
+	background-color: #00FF00;
+}
+
+#save_world{
+	text-decoration: none;
+	color: #00FF00;
+	background-color: black;
+}
+
+#save_world:hover{
+	color: black;
+	background-color: #00FF00;	
+}
+
+footer {
+	padding: 10px;
+	text-align: center;
+	background-color: #00FF00;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
 }

@@ -2,27 +2,29 @@ var destroyer;
 var laser;
 var ufo;
 var testufo = [];
-var img;
 var number;
+var vader;
+var ship;
 
 function setup() {
   createCanvas(window.innerWidth,window.innerHeight);
   destroyer = new Destroyer();
   laser = new Laser(this.position.x + size/2, this.position.y);
-  img = loadImage("i.png");
-  createUFOs(1);
+  createUFOs(2);
+  vader = loadImage("i.png");
+  ship = loadImage("s.png");
+
 }
 
 function createUFOs(amount) {
-  //testufo[i] = new UFO(createVector(100 + 100 * i, y), 30);
-  var i = 0;
   number = amount;
+  var i = 0;
   for (var y = 100; y < height; y = y + 100) {
     for (var x = 100; x < width; x = x + 100) {
       testufo[i] = new UFO(createVector(x, y), 30);
       i++;
       if (i == amount)
-        break;
+        return;
     }
   }
 }
@@ -30,11 +32,11 @@ function colision() {
   
 }
 function draw() {
-  background(150);
+  background(0);
   laser.move();
   destroyer.draw();
   laser.update(this.position.x + size/2);
-  for (var i = 0; i < amount; i++) {
+  for (var i = 0; i < number; i++) {
     testufo[i].draw();
     testufo[i].move();
   }
@@ -51,16 +53,14 @@ function draw() {
     laser.pew();
   }
 }
-function hit() {
 
-  return false;
+/*
+function play() {
+  setup();
+  createUFOs(10);
+  draw();
 }
-
-//function play() {
-//  setup();
-//  createUFOs(10);
-//  draw();
-//}
+*/
 ///////////////////////////////////////////////////////
 //Destroyer functions
 function Destroyer() {
@@ -80,7 +80,8 @@ Destroyer.prototype.move = function move(value) {
 Destroyer.prototype.draw = function draw() {
   stroke(0);
   fill(200,100,80);
-  rect(position.x, position.y, size, size);
+  //rect(position.x, position.y, size, size);
+  image(ship, position.x, position.y);
   laser.draw();
 }
 ///////////////////////////////////////////////////////
@@ -130,8 +131,7 @@ function UFO(pos, size) {
 UFO.prototype.draw = function draw() {
   stroke(0,200,0);
   fill(0,250,0);
-  image(img, this.position.x, this.position.y);
-  //ellipse(this.position.x, this.position.y, this.size, this.size);
+  image(vader, this.position.x, this.position.y);
 }
 //
 UFO.prototype.move = function move() {
@@ -150,8 +150,3 @@ UFO.prototype.move = function move() {
   }
 }
 //
-UFO.prototype.destroyed = function destroyed() {
-
-}
-
-//play();
