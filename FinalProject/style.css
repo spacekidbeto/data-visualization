@@ -3,14 +3,18 @@
     src: url(http://ff.static.1001fonts.net/s/p/space-age.spaceage.otf);
 }
 
+@font-face {
+    font-family: tek;
+    src: url(http://ff.static.1001fonts.net/m/a/marske.regular.otf);
+}
+
 html{
 	position: relative;
-    min-height: 100%;
+  min-height: 100%;
+  background: url(stars.gif) no-repeat center center fixed; 
+  background-size: cover;
 }
-body{
-	background-color: black;
-	margin: 0 0 100px;
-}
+
 
 #search-json-input {
 	color: #00FF00;
@@ -45,6 +49,7 @@ body{
 }
 
 p{
+	font-family: tek;
 	text-align: center;
 	color: #00FF00;
 	font-size: 35px;
@@ -60,40 +65,18 @@ table{
 	color: #00FF00;
 }
 
-#results{
-	color: white;
-}
-
-#game_button{
-	display: block;
-    margin: 0 auto;
-    text-align: center;
-	text-align: center;
-	color: #00FF00;
-	background-color: black;
-	border-color: #00FF00;
-	border:2px solid #00FF00;
-	font-size: 35px;
-}
-
-#game_button:hover{
-	color: black;
-	background-color: #00FF00;
-}
-
 #save_world{
+	font-family: tek;
+  font-size: 50px;
 	text-decoration: none;
-	color: #00FF00;
-	background-color: black;
-}
-
-#save_world:hover{
 	color: black;
+  width: 100%;
 	background-color: #00FF00;	
 }
 
 footer {
-	padding: 10px;
+	font-family: tek;
+	padding: 1px;
 	text-align: center;
 	background-color: #00FF00;
     position: absolute;
@@ -101,4 +84,31 @@ footer {
     bottom: 0;
     height: 30px;
     width: 100%;
+}
+
+#lista{
+	font-size: 20px;
+	padding: 5px;
+	list-style-type: none; 
+}
+
+#date{
+	color: #00FF00;
+	padding: 5px;
+	text-align: left;
+}
+
+#location{
+	color: #00FF00;	
+	padding: 5px;
+	text-align: left;	
+}
+
+#description{
+	color: #00FF00; 
+	padding: 5px;	
+}
+
+#defaultCanvas0{
+  display: none;
 }

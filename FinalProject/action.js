@@ -11,19 +11,31 @@ $(function() {
 });
 */
 
-
-//search
-var z = 0
-var img;
-
-function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
-  img = loadImage("i.png");  // Load the image
+function change(one, two){
+   one.test = two;
+   return one.test;
 }
 
+var z;
+
+var x = {
+  test: 1
+};
+
+var img;
+var vader;
+var destroyer;
+var ufo;
+var enemy = [];
+var number;
+var enemy_left;
+var end_screen = false;
+var s;
 
 function drawVader(z){
     clear();
+    change(x, z);
+    createUFOs(x.test);
     if(z>1 || z==0){
         alert("there are " + z + " invaders");
     }
@@ -44,8 +56,6 @@ function drawVader(z){
         fill(0, 255, 0);
         text("x "+z, 1, 60);   
     }
-
-    jQuery('#boton').append('<button id="game_button">'+'<a id="save_world" href="game.html">'+'Save The World'+'</a>'+'</button>');
 }
 
 $(function(){
@@ -1052,7 +1062,14 @@ var a  =[
 ,{"sighted_at": "20100725", "reported_at": "20100806", "location": " Fair Oak (UK/England),", "shape": " fireball", "duration": "Two minutes", "description": "Two orange fireballs observedAt around 22:50 hours local time, on the evening of July 25th, 2010, a seventy-three year old male resident of the village of Fair Oak, Hampshire, England, happened to go outside in order to lock up his vehicle for the night.  It was while he was doing this that he happened to glance up into the sky and off towards the south-southeast and saw what seemed to be two distinct and very brilliant orange colored lights in the sky at probably not more than one-quarter mile from his observation point. According to the observer, the lights were flying vertically across the sky, with one trailing the other at a distance, estimated by the witness to be between six hundred and one thousand yards, and at an angle of approximately fifty degrees above the horizon.  Suddenly, the leading light source terminated its forward motion and made a sheer vertical acceleration, vanishing into the sky.  The trailing object continued on course, and in a matter of a few seconds was lost behind two story buildings, terminating his observation."}
 ];
 
+function showLink() {
+   document.getElementById('defaultCanvas0').style.display = "block";
+   document.getElementById('boton').style.display = "block";
+}
+
 jQuery('#search-json-submit').click(function() {
+    showLink();
+    end_screen = false;
     jQuery('#search-output').html('');
     var search_query = jQuery('#search-json-input').val();
     var search_query_regex = new RegExp(".*"+search_query+".*", "g");
@@ -1060,13 +1077,202 @@ jQuery('#search-json-submit').click(function() {
     jQuery.each(a, function(k, v) {
         if(v['location'].match(search_query_regex) ||
            v['description'].match(search_query_regex)) {
-               jQuery('#search-output').append('<li>'+'Date: '+v['sighted_at']+'</br>'+' Location: '+v['location']+'</br>'+' Description: '+v['description']+'</li>');
+               jQuery('#search-output').append('<li id="lista">'+'<div id="date">Date: '+v['sighted_at']+'</div></br><div id="location">'+' Location: '+v['location']+'</div></br><div id="description">'+' Description: '+v['description']+'</div></li>');
                   z = $("#search-output li").length;
         }
     });
     drawVader(z);
 });
-
 });
 
 
+///////////GAME/////////
+function setup() {
+      createCanvas(window.innerWidth,window.innerHeight);
+      destroyer = new Destroyer();
+      //createUFOs(1);
+      vader = loadImage("i.png");
+      s = loadImage("s.png");
+}
+
+
+function createUFOs(amount) {
+  enemy_left = number = amount;
+  var i = 0;
+  for (var y = 100; y < height; y = y + 50) {
+    for (var x = 100; x < width; x = x + 50) {
+      enemy[i] = new UFO(createVector(x, y), 30);
+      i++;
+      if (i == amount)
+        return;
+    }
+  }
+}
+
+function draw() {
+  if (!end_screen) {
+    background(0);
+    destroyer.draw();
+    for (var i = 0; i < number; i++) {
+      enemy[i].draw();
+      enemy[i].move();
+    }
+    if (keyIsDown(LEFT_ARROW)) {
+      destroyer.move(-5);
+    }
+    else if (keyIsDown(RIGHT_ARROW)) {
+      destroyer.move(5);
+    }
+    if (keyIsDown(SHIFT)) {
+      destroyer.pew();
+    } 
+    if (enemy_left == 0)
+      end_screen = true;
+  }
+  else {
+    //draw end screen here
+    background(0);
+    textSize(32);
+    fill(0, 255, 0);
+    text("CONGRATULATIONS! YOU'RE A HERO", 300, 300);
+  }
+}
+
+function collide(laser) {
+  for (var i = 0; i < number; i++) {
+    if (enemy[i].position.x - enemy[i].size/2 <= laser.laser_position.x  && laser.laser_position.x <= enemy[i].position.x + enemy[i].size/2 &&
+        enemy[i].position.y - enemy[i].size/2 <= laser.laser_position.y && laser.laser_position.y <= enemy[i].position.y + enemy[i].size/2 ||
+        enemy[i].position.y - enemy[i].size <= laser.laser_position.y + laser.length && laser.laser_position.y + laser.length <= enemy[i].position.y + enemy[i].size/2) {
+          if (!enemy[i].isDestroyed) {
+            enemy_left-=1;
+          }
+          enemy[i].destroyed();
+    }     
+  }
+}
+///////////////////////////////////////////////////////
+//Destroyer functions
+function Destroyer() {
+  position = createVector(width/2, height - 50);
+  size = 30;
+  ammo = new Ammo(10);
+  fire_rate = 50;
+  counter = 0;
+}
+//changes position of Destroyer and keeps within boundries
+Destroyer.prototype.move = function move(value) {
+  if (position.x < 0) 
+    position.x = 0;
+  else if (position.x > width - size)
+    position.x = width - size;
+  position.x += value;
+}
+
+Destroyer.prototype.draw = function draw() {
+  noStroke();
+  fill(200,100,80);
+  //rect(position.x, position.y, size, size);
+  image(s, position.x, position.y);
+  counter++;
+  ammo.draw();
+}
+
+Destroyer.prototype.pew = function pew() {
+  //check if each laser is ready to be fired
+  if (counter > fire_rate) {
+    ammo.fire(position.x, position.y);
+    counter = 0;
+  }
+}
+///////////////////////////////////////////////////////
+//Laser functions
+function Laser(x, y) {
+  this.laser_position = createVector(x, y);
+  reloadY = y;
+  length = 10;
+  this.speed = 6;
+  this.ready = false;
+}
+
+Laser.prototype.draw = function draw() {
+  if (this.ready) {
+    strokeWeight(3);
+    stroke(200,0,0);
+    line(this.laser_position.x, this.laser_position.y, this.laser_position.x, this.laser_position.y + length);
+  }
+}
+
+Laser.prototype.move = function move() {
+  if (this.ready) {
+    this.laser_position.y -= this.speed;
+    if (this.laser_position.y < 0) {
+      this.laser_position.y = reloadY;
+      this.ready = false;
+    }
+  }
+}
+
+Laser.prototype.release = function release(bool, newX, newY) {
+  this.laser_position = createVector(newX, newY);
+  this.ready = bool;
+}
+///////////////////////////////////////////////////////
+var Ammo = function(size) {
+  this.pool = [];
+  this.counter = 0;
+  this.size = size;
+  for (var i = 0; i < size; i++)
+    this.pool[i] = new Laser(position.x, position.y);
+}
+
+Ammo.prototype.fire = function fire(x, y) {
+  this.pool[this.counter].release(true, x, y);
+  this.counter++;
+  if (this.counter >= this.size)
+    this.counter = 0;
+}
+
+Ammo.prototype.draw = function draw() {
+  for (var i = 0; i < this.size; i++) {
+    this.pool[i].draw();
+    this.pool[i].move();
+    collide(this.pool[i]);
+  }
+}
+
+///////////////////////////////////////////////////////
+//UFO functions
+function UFO(pos, size) {
+  this.position = pos;
+  this.size = size;
+  this.speed = 4;
+  this.isDestroyed = false;
+}
+
+UFO.prototype.draw = function draw() {
+  if (!this.isDestroyed) {
+    noStroke();
+    fill(0,250,0);
+    image(vader, this.position.x, this.position.y);
+  } 
+}
+
+UFO.prototype.move = function move() {
+  this.position.x += this.speed;
+  if (this.position.x < this.size) {
+    this.speed *= -1;
+    if(this.position.y > height/2)
+      this.position.y -= 4;
+    else this.position.y += 4;
+  }
+  else if (this.position.x > width - size) {
+    this.speed *= -1;
+    if(this.position.y > height/2)
+      this.position.y -= 4;
+    else this.position.y += 4;
+  }
+}
+
+UFO.prototype.destroyed = function destroyed() {
+  this.isDestroyed = true;
+}

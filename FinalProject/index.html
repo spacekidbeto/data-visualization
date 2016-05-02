@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>Are you Alone?</title>
 	<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
 	<meta name="author" content="Roberto Hernandez, My-Linh;" />
   	<meta name="description" content="See UFO cases in your area!" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -12,14 +13,14 @@
     <script id="boom" src="action.js"></script>
 </head>
 <body>
-	<h1 id="title">Aliens?</h1>
+	<h2 id="title">Aliens?</h2>
   	<p>Enter Your Location:<br>
       <input type="text" id="search-json-input" />
       <input type="button" id="search-json-submit" value="search" />
       <results id="header_results">
       <ol id="search-output">
       </ol>
-      <div id="boton"></div>
+      <div id="boton"  style="display:none;" class="answer_list"><p id="save_world">Destroy The Invaders!</p></div>
 
     <!--table id= "userdata" border="2">
   	<thead>
@@ -31,8 +32,8 @@
       <tbody>
       </tbody>
    	</table!-->
-
-  	</p>
+   </p>
     <footer>Copyright © 2016 Aliens</footer>
+</canvas>
 </body>
 </html>
